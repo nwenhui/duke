@@ -10,34 +10,45 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
 
-        //lvl 4: to dos, events, deadlines
+        //lvl 5: handle errors
         System.out.println("Hello! I'm Duke \nWhat can I do for you?");
         Scanner scan = new Scanner(System.in);
         String userInput = scan.next();
         String status;
         char trash;
         ArrayList<Task> userList = new ArrayList<>(100);
-        while (!userInput.equalsIgnoreCase("bye")) {
+        while (!userInput.equalsIgnoreCase("bye")){
+            try {
+                checkCommand(userInput);
+            } catch (DukeException e){
+                System.out.println("e r r o r   f o u n d\n" + e);
+            }
             if (userInput.equalsIgnoreCase("list")) {
                 printList(userList);
             } else if (userInput.equalsIgnoreCase("done")) {
                 userInput = scan.nextLine();
-                char taskNum = userInput.charAt(userInput.length() - 1);
-                if (Character.getNumericValue(taskNum) > userList.size()) {
-                    System.out.println("e r r o r: not a valid task!! \npls try another input");
-                } else {
-                    Task doneTask = userList.get(Character.getNumericValue(taskNum) - 1);
+                int taskNum = Character.getNumericValue(userInput.charAt(userInput.length() - 1)) - 1;
+                try {
+                    checkTask(taskNum, userList);
+                    Task doneTask = userList.get(taskNum);
                     doneTask.markAsDone();
                     status = doneTask.getType();
                     System.out.println("Nice! I've marked this task as done: \n\t" + status + "[\u2713] " + doneTask.description);
+                } catch (DukeException e){
+                    System.out.println("e r r o r   f o u n d\n" + e);
                 }
             } else {
-                if (userInput.equalsIgnoreCase("todo")) {
+                if (userInput.equalsIgnoreCase("todo")){
                     userInput = scan.nextLine();
-                    Task newTodo = new Todo(userInput);
-                    System.out.println("Got it. I've added this task:\n\t[T][\u2718] " + userInput);
-                    userList.add(newTodo);
-                    System.out.println("Now you have " + userList.size() + " tasks in the list");
+                    try {
+                        checkDescription(userInput);
+                        Task newTodo = new Todo(userInput);
+                        System.out.println("Got it. I've added this task:\n\t[T][\u2718] " + userInput);
+                        userList.add(newTodo);
+                        System.out.println("Now you have " + userList.size() + " tasks in the list");
+                    } catch (DukeException e){
+                        System.out.println("e r r o r   f o u n d\n" + e);
+                    }
                 } else if (userInput.equalsIgnoreCase("deadline")) {
                     userInput = scan.nextLine();
                     String[] tokens = userInput.split(" /by ");
@@ -52,8 +63,6 @@ public class Duke {
                     System.out.println("Got it. I've added this task:\n\t[E][\u2718] " + tokens[0] + " (at: " + tokens[1] + ")");
                     userList.add(newEvent);
                     System.out.println("Now you have " + userList.size() + " tasks in the list");
-                } else{
-                    System.out.println("e r r o r: this is not a valid input!!\npls try another command");
                 }
             }
             userInput = scan.next();
@@ -81,6 +90,39 @@ public class Duke {
                 } else {
                     System.out.println(++count + "." + type + status + t.description + t.extra);
                 }
+            }
+        }
+    }
+
+    //function to check whether input command is valid
+    static void checkCommand(String command) throws DukeException {
+        String[] commandList = {"todo", "deadline", "event", "done", "list"};
+        boolean flag = false;
+        for (int i = 0; i < commandList.length; i++) {
+            if (command.equalsIgnoreCase(commandList[i])) {
+                flag = true;
+            }
+        }
+        if (!flag) {
+            throw new DukeException("ohno u entered an invalid command :( pls try again");
+        }
+    }
+
+    //function to check whether there is description added
+    static void checkDescription(String input) throws DukeException{
+        if (input.isEmpty()){
+            throw new DukeException("ohno u did not enter a description :( pls try again");
+        }
+    }
+
+    //function to check whether task "done" is valid
+    static void checkTask(int a, ArrayList<Task> l) throws DukeException{
+        if (a >= l.size() || a < 0){
+            throw new DukeException("ohno u entered an invalid task no. :( pls try again");
+        } else{
+            Task checkTask = l.get(a);
+            if (checkTask.checkStatus()){
+                throw new DukeException("ohno the task is already completed :( pls try with another task number");
             }
         }
     }

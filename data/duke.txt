@@ -1,0 +1,4 @@
+todo | completed | test1
+todo | completed | task1
+event | completed | event 1time
+deadline | completed | deadline 1 | timer

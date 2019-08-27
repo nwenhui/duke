@@ -61,6 +61,13 @@ public class inputData {
         newFile.renameTo(new File("/Users/wenhui/dukeyduke/data/duke.txt"));
     }
 
+    static void clear(){
+        File oldFile = new File("/Users/wenhui/dukeyduke/data/duke.txt");
+        File newFile = new File("/Users/wenhui/dukeyduke/data/tempduke.txt");
+        oldFile.delete();
+        newFile.renameTo(new File("/Users/wenhui/dukeyduke/data/duke.txt"));
+    }
+
     public void closeFile(){
         print.close();
     }

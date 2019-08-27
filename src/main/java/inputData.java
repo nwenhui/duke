@@ -64,8 +64,6 @@ public class inputData {
     public void deleteTask(String type, String description) throws IOException {
         File oldFile = new File("/Users/wenhui/dukeyduke/data/duke.txt");
         File newFile = new File("/Users/wenhui/dukeyduke/data/tempduke.txt");
-
-        //FileWriter writer = new FileWriter("/Users/wenhui/dukeyduke/data/duke.txt");
         FileWriter fw = new FileWriter("/Users/wenhui/dukeyduke/data/tempduke.txt", true);
         BufferedWriter bw = new BufferedWriter(fw);
         PrintWriter pw = new PrintWriter(bw);
@@ -84,10 +82,11 @@ public class inputData {
         newFile.renameTo(new File("/Users/wenhui/dukeyduke/data/duke.txt"));
     }
 
-    static void clear(){
+    static void clear() throws IOException {
         File oldFile = new File("/Users/wenhui/dukeyduke/data/duke.txt");
         File newFile = new File("/Users/wenhui/dukeyduke/data/tempduke.txt");
         oldFile.delete();
+        FileWriter fw = new FileWriter("/Users/wenhui/dukeyduke/data/tempduke.txt");
         newFile.renameTo(new File("/Users/wenhui/dukeyduke/data/duke.txt"));
     }
 

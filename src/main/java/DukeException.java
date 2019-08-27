@@ -10,7 +10,7 @@ public class DukeException extends Exception {
 
     //function to check whether input command is valid
     public static void checkCommand(String command) throws DukeException {
-        String[] commandList = {"todo", "deadline", "event", "done", "list", "help", "clear"};
+        String[] commandList = {"todo", "deadline", "event", "done", "list", "help", "clear", "find"};
         boolean flag = false;
         for (int i = 0; i < commandList.length; i++) {
             if (command.equalsIgnoreCase(commandList[i])) {
@@ -52,6 +52,13 @@ public class DukeException extends Exception {
     public static void checkDeadlineInput(String input) throws DukeException {
         if (!input.contains(" /by ")){
             throw new DukeException("ohno u entered the deadline incorrectly :( pls try again in the format below:\n\tevent <description> /by <date> <time>");
+        }
+    }
+
+    //function to check whether task "done" is valid
+    public static void checkDelete(int a, ArrayList<Task> l) throws DukeException {
+        if (a >= l.size() || a < 0) {
+            throw new DukeException("ohno u entered an invalid task no. :( pls try again");
         }
     }
 }

@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Duke {
-    public static void main(String[] args) throws IOException, ParseException {
+    public static void main(String[] args) throws IOException, ParseException, DukeException {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -44,9 +44,9 @@ public class Duke {
             } catch (DukeException e) {
                 System.out.println("e r r o r   f o u n d\n" + e);
             }
-            if (userInput.equalsIgnoreCase("help")){
+            if (userInput.equalsIgnoreCase("help")) {
                 Command.printCommands();
-            }  else if (userInput.equalsIgnoreCase("clear")){
+            } else if (userInput.equalsIgnoreCase("clear")) {
                 inputData.clear();
             } else if (userInput.equalsIgnoreCase("list")) {
                 System.out.println("Here are the tasks in your list:");
@@ -54,51 +54,70 @@ public class Duke {
             } else if (userInput.equalsIgnoreCase("done")) {
                 userInput = scan.nextLine();
                 Command.doneTask(userInput, userList);
-            } else if (userInput.equalsIgnoreCase("delete")){
+            } else if (userInput.equalsIgnoreCase("delete")) {
                 userInput = scan.nextLine();
                 String[] tokens = userInput.split(Pattern.quote(" "));
                 int taskNum = Integer.parseInt(tokens[1]) - 1;
                 try {
-                    checkDelete(taskNum, userList);
+                    DukeException.checkDelete(taskNum, userList);
                     inputData newDelete = new inputData();
                     Task deleteTask = userList.get(taskNum);
                     String type = deleteTask.getType();
                     String status = deleteTask.getStatusIcon();
                     System.out.println("Noted. I've removed this task:");
-                    if (type.contains("T")){
+                    if (type.contains("T")) {
                         System.out.println("\t" + type + status + " " + deleteTask.description);
-                    } else if (type.contains("E")){
+                    } else if (type.contains("E")) {
                         System.out.println("\t" + type + status + " " + deleteTask.description + " (at: " + deleteTask.extra + ")");
-                    } else if (type.contains("D")){
+                    } else if (type.contains("D")) {
                         System.out.println("\t" + type + status + " " + deleteTask.description + " (by: " + deleteTask.extra + ")");
                     }
                     newDelete.deleteTask(type, deleteTask.description);
                     userList.remove(taskNum);
                 } catch (DukeException e) {
                     System.out.println("e r r o r   f o u n d\n" + e);
+                } else if (userInput.equalsIgnoreCase("find")) {
+                    userInput = scan.nextLine().trim();
+                    System.out.println("searching for... " + userInput);
+                    boolean flag = true;
+                    boolean first = true;
+                    for (int i = 0; i < userList.size(); i++) {
+                        if (userList.get(i).description.contains(userInput)) {
+                            flag = false;
+                            if (first) {
+                                System.out.println("Here are the matching tasks in your list:");
+                                first = false;
+                            }
+                            String type = userList.get(i).getType();
+                            String status = userList.get(i).getStatusIcon();
+                            if (type.contains("T")) {
+                                System.out.println(i + 1 + ". " + type + status + userList.get(i).description);
+                            } else if (type.contains("E")) {
+                                System.out.println(i + 1 + ". " + type + status + userList.get(i).description + "(at: " + userList.get(i).extra + ")");
+                            } else if (type.contains("D")) {
+                                System.out.println(i + ". " + type + status + userList.get(i).description + "(by: " + userList.get(i).extra + ")");
+                            }
+                        }
+                    }
+                    if (flag) {
+                        System.out.println("there are no matching tasks in ur list :(");
+                    }
+                } else {
+                    inputData newData = new inputData();
+                    if (userInput.equalsIgnoreCase("todo")) {
+                        userInput = scan.nextLine();
+                        Todo.addTodo(userInput, userList, newData);
+                    } else if (userInput.equalsIgnoreCase("deadline")) {
+                        userInput = scan.nextLine();
+                        Deadline.addDeadline(userInput, userList, newData);
+                    } else if (userInput.equalsIgnoreCase("event")) {
+                        userInput = scan.nextLine();
+                        Event.addEvent(userInput, userList, newData);
+                    }
                 }
+                userInput = scan.next();
             }
-            else {
-                inputData newData = new inputData();
-                if (userInput.equalsIgnoreCase("todo")) {
-                    userInput = scan.nextLine();
-                    Todo.addTodo(userInput, userList, newData);
-                } else if (userInput.equalsIgnoreCase("deadline")) {
-                    userInput = scan.nextLine();
-                    Deadline.addDeadline(userInput, userList, newData);
-                } else if (userInput.equalsIgnoreCase("event")) {
-                    userInput = scan.nextLine();
-                    Event.addEvent(userInput, userList, newData);
-                }
-            }
-            userInput = scan.next();
-        }
-        System.out.println("Bye. Hope to see you again soon!");
-    }
-
-    static void checkDelete(int a, ArrayList<Task> l) throws DukeException {
-        if (a >= l.size() || a < 0) {
-            throw new DukeException("ohno u entered an invalid task no. :( pls try again");
+            System.out.println("Bye. Hope to see you again soon!");
         }
     }
 }

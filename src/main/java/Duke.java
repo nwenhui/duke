@@ -31,6 +31,7 @@ public class Duke {
             FileWriter writer = new FileWriter("/Users/wenhui/dukeyduke/data/duke.txt");
         }
 
+        //level 9: find
         System.out.println("Hello! I'm Duke \nWhat can I do for you?\nenter help for a list of commands available uwu\n\n*-*-*-*-*-*-*-*-*-*-*-*-*\nHere is your current task list:");
         Command.printList(userList);
         System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*\n");
@@ -53,7 +54,34 @@ public class Duke {
             } else if (userInput.equalsIgnoreCase("done")) {
                 userInput = scan.nextLine();
                 Command.doneTask(userInput, userList);
-            } else {
+            } else if (userInput.equalsIgnoreCase("find")){
+                userInput = scan.nextLine().trim();
+                System.out.println("searching for... " + userInput);
+                boolean flag = true;
+                boolean first = true;
+                for (int i = 0; i < userList.size(); i++){
+                    if (userList.get(i).description.contains(userInput)){
+                        flag = false;
+                        if (first){
+                            System.out.println("Here are the matching tasks in your list:");
+                            first = false;
+                        }
+                        String type = userList.get(i).getType();
+                        String status = userList.get(i).getStatusIcon();
+                        if (type.contains("T")){
+                            System.out.println(i+1 + ". " + type + status + userList.get(i).description);
+                        } else if (type.contains("E")){
+                            System.out.println(i+1 + ". " + type + status + userList.get(i).description + "(at: " + userList.get(i).extra + ")");
+                        } else if (type.contains("D")){
+                            System.out.println(i + ". " + type + status + userList.get(i).description + "(by: " + userList.get(i).extra + ")");
+                        }
+                    }
+                }
+                if (flag){
+                    System.out.println("there are no matching tasks in ur list :(");
+                }
+            }
+            else {
                 inputData newData = new inputData();
                 if (userInput.equalsIgnoreCase("todo")) {
                     userInput = scan.nextLine();

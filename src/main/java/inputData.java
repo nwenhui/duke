@@ -61,10 +61,11 @@ public class inputData {
         newFile.renameTo(new File("/Users/wenhui/dukeyduke/data/duke.txt"));
     }
 
-    static void clear(){
+    static void clear() throws IOException {
         File oldFile = new File("/Users/wenhui/dukeyduke/data/duke.txt");
         File newFile = new File("/Users/wenhui/dukeyduke/data/tempduke.txt");
         oldFile.delete();
+        FileWriter fw = new FileWriter("/Users/wenhui/dukeyduke/data/tempduke.txt");
         newFile.renameTo(new File("/Users/wenhui/dukeyduke/data/duke.txt"));
     }
 

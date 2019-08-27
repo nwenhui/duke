@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class Duke {
     public static void main(String[] args) {
@@ -9,14 +11,48 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
 
-        //lvl 1: greet, echo, exit
+        //lvl 3: mark as done
         System.out.println("Hello! I'm Duke \nWhat can I do for you?");
         Scanner scan = new Scanner(System.in);
         String userInput = scan.nextLine();
-        while (!userInput.equalsIgnoreCase("bye")) {
-            System.out.println(userInput);
+        String bye = "bye";
+        String listString = "list";
+        ArrayList<Task> userList = new ArrayList<>(100);
+        while (!userInput.equalsIgnoreCase(bye)){
+            if (userInput.equalsIgnoreCase(listString)){
+                printList(userList);
+            } else if (userInput.contains("done")){
+                String[] tokens = userInput.split(Pattern.quote(" "));
+                int taskNum = Integer.parseInt(tokens[1]) - 1;
+                if (taskNum > userList.size()){
+                    System.out.println("e r r o r: not a valid task!! \npls try another input");
+                } else {
+                    Task doneTask = userList.get(taskNum);
+                    doneTask.markAsDone();
+                    System.out.println("Nice! I've marked this task as done: \n[\u2713] " + doneTask.description);
+                }
+            } else{
+                Task newTask = new Task(userInput);
+                System.out.println("added: " + userInput);
+                userList.add(newTask);
+            }
             userInput = scan.nextLine();
         }
         System.out.println("Bye. Hope to see you again soon!");
+    }
+    //function to print list out -- prints error message when list is empty
+    public static void printList (ArrayList<Task> l){
+        if (l.isEmpty()) {
+            System.out.println("e r r o r: list is currently empty!! \npls enter any input and try again");
+        } else{
+            System.out.println("Here are the tasks in your list:");
+            int count = 0;
+            String status;
+            for (int i = 0; i < l.size(); i++){
+                Task t = l.get(i);
+                status = t.getStatusIcon();
+                System.out.println(++count + ". [" + status + "] " + t.description);
+            }
+        }
     }
 }

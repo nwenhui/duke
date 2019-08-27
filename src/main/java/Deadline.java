@@ -18,11 +18,11 @@ public class Deadline extends Task {
         try {
             DukeException.checkDeadlineInput(userInput);
             String[] tokens = userInput.split(Pattern.quote(" /by "));
-            Task newEvent = new Event(tokens[0], tokens[1]);
-            userList.add(newEvent);
+            Task newDeadline = new Deadline(tokens[0], tokens[1]);
+            userList.add(newDeadline);
             tokens[1] = Command.convertDate(tokens[1]);
-            System.out.println("Got it. I've added this task:\n\t[D][\u2718] " + tokens[0].trim() + " (at: " + tokens[1].trim() + ")");
-            newData.addIncompleteEvent(tokens[0].trim(), tokens[1].trim());
+            System.out.println("Got it. I've added this task:\n\t[D][\u2718] " + tokens[0].trim() + " (by: " + tokens[1].trim() + ")");
+            newData.addIncompleteDeadline(tokens[0].trim(), tokens[1].trim());
             System.out.println("Now you have " + userList.size() + " tasks in the list");
         } catch (DukeException | ParseException | IOException e) {
             System.out.println("e r r o r   f o u n d\n" + e);

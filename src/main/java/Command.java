@@ -26,7 +26,7 @@ public class Command {
                 } else if (type.contains("D")) {
                     System.out.println(++count + "." + type + status + " " + t.description + " (by: " + t.extra + ")");
                 } else {
-                    System.out.println(++count + "." + type + status + " " + t.description + t.extra);
+                    System.out.println(++count + "." + type + status + " " + t.description);
                 }
             }
         }
@@ -54,6 +54,59 @@ public class Command {
             System.out.println("Nice! I've marked this task as done: \n\t" + status + "[\u2713] " + doneTask.description);
         } catch (DukeException | IOException e) {
             System.out.println("e r r o r   f o u n d\n" + e);
+        }
+    }
+
+    //function to delete task
+    static void deleteTask(String userInput, ArrayList<Task> userList) {
+        String[] tokens = userInput.split(Pattern.quote(" "));
+        int taskNum = Integer.parseInt(tokens[1]) - 1;
+        try {
+            DukeException.checkDelete(taskNum, userList);
+            inputData newDelete = new inputData();
+            Task deleteTask = userList.get(taskNum);
+            String type = deleteTask.getType();
+            String status = deleteTask.getStatusIcon();
+            System.out.println("Noted. I've removed this task:");
+            if (type.contains("T")) {
+                System.out.println("\t" + type + status + " " + deleteTask.description);
+            } else if (type.contains("E")) {
+                System.out.println("\t" + type + status + " " + deleteTask.description + " (at: " + deleteTask.extra + ")");
+            } else if (type.contains("D")) {
+                System.out.println("\t" + type + status + " " + deleteTask.description + " (by: " + deleteTask.extra + ")");
+            }
+            newDelete.deleteTask(type, deleteTask.description);
+            userList.remove(taskNum);
+        } catch (DukeException | IOException e) {
+            System.out.println("e r r o r   f o u n d\n" + e);
+        }
+    }
+
+    //function to find task using keyword
+    static void findTask(String userInput, ArrayList<Task> userList){
+        System.out.println("searching for... " + userInput);
+        boolean flag = true;
+        boolean first = true;
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).description.contains(userInput)) {
+                flag = false;
+                if (first) {
+                    System.out.println("Here are the matching tasks in your list:");
+                    first = false;
+                }
+                String type = userList.get(i).getType();
+                String status = userList.get(i).getStatusIcon();
+                if (type.contains("T")) {
+                    System.out.println(i + 1 + ". " + type + status + userList.get(i).description);
+                } else if (type.contains("E")) {
+                    System.out.println(i + 1 + ". " + type + status + userList.get(i).description + "(at: " + userList.get(i).extra + ")");
+                } else if (type.contains("D")) {
+                    System.out.println(i + ". " + type + status + userList.get(i).description + "(by: " + userList.get(i).extra + ")");
+                }
+            }
+        }
+        if (flag) {
+            System.out.println("there are no matching tasks in ur list :(");
         }
     }
 

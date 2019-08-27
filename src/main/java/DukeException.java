@@ -10,7 +10,7 @@ public class DukeException extends Exception {
 
     //function to check whether input command is valid
     public static void checkCommand(String command) throws DukeException {
-        String[] commandList = {"todo", "deadline", "event", "done", "list", "help", "clear", "find"};
+        String[] commandList = {"todo", "deadline", "event", "done", "list", "help", "clear", "find", "delete"};
         boolean flag = false;
         for (int i = 0; i < commandList.length; i++) {
             if (command.equalsIgnoreCase(commandList[i])) {

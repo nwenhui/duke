@@ -31,7 +31,7 @@ public class Duke {
             FileWriter writer = new FileWriter("/Users/wenhui/dukeyduke/data/duke.txt");
         }
 
-        //level 6: delete task
+        //level 9: find
         System.out.println("Hello! I'm Duke \nWhat can I do for you?\nenter help for a list of commands available uwu\n\n*-*-*-*-*-*-*-*-*-*-*-*-*\nHere is your current task list:");
         Command.printList(userList);
         System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*\n");

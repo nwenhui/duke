@@ -20,4 +20,8 @@ public class Task {
     public String getType(){
         return ("task");
     }
+
+    public boolean checkStatus(){
+        return isDone;
+    }
 }

@@ -71,7 +71,7 @@ public class inputData {
         while (scan.hasNextLine()) {
             String userInput = scan.nextLine();
             String[] tokens = userInput.split(Pattern.quote(" | "));
-            if (!tokens[0].equals(type) && !tokens[2].equals(description)) {
+            if (!tokens[0].equals(type) || !tokens[2].equals(description)) {
                 pw.println(userInput);
             }
         }
@@ -88,6 +88,7 @@ public class inputData {
         oldFile.delete();
         FileWriter fw = new FileWriter("/Users/wenhui/dukeyduke/data/tempduke.txt");
         newFile.renameTo(new File("/Users/wenhui/dukeyduke/data/duke.txt"));
+        System.out.println("task list cleared! :)");
     }
 
     public void closeFile(){

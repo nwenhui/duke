@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.regex.Pattern;
 
-public class Command {
+public class TaskList {
 
     //function to print list out -- prints error message when list is empty
     public static void printList(ArrayList<Task> l) {

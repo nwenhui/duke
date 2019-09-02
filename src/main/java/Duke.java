@@ -1,11 +1,20 @@
-import java.io.IOException;
+import java.io.*;
 import java.text.ParseException;
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.io.File;
-import java.io.FileWriter;
 
-public class Duke{
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
+import javafx.scene.layout.*;
+//import org.w3c.dom.Text;
+import javafx.scene.text.Text;
+
+public class Duke extends Application{
+
+    Scene welcomeScene, inputScene;
+
     public static void main(String[] args) throws IOException, ParseException, DukeException {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -73,5 +82,55 @@ public class Duke{
         }
         System.out.println("Bye. Hope to see you again soon!");
     }
+
+    @Override
+    public void start(Stage stage) throws IOException {
+        File dataFile = new File("/Users/wenhui/dukeyduke/data");
+        File data = new File("/Users/wenhui/dukeyduke/data/duke.txt");
+        ArrayList<Task> userList = new ArrayList<>(100);
+        if (data.exists()) {
+            readData read = new readData();
+            read.openFile();
+            userList = read.readFile();
+            read.closeFile();
+        } else {
+            dataFile.mkdir();
+            FileWriter writer = new FileWriter("/Users/wenhui/dukeyduke/data/duke.txt");
+        }
+
+        stage.setTitle("duke :)");
+
+        Label helloduke = new Label("Hello from\n____        _        \n"
+                + "|  _ \\ _   _| | _____ \n"
+                + "| | | | | | | |/ / _ \\\n"
+                + "| |_| | |_| |   <  __/\n"
+                + "|____/ \\__,_|_|\\_\\___|\n");
+        Button start = new Button("start");
+        start.setOnAction(e -> stage.setScene(inputScene));
+
+        VBox layout1 = new VBox();
+        layout1.getChildren().addAll(helloduke, start);
+        welcomeScene = new Scene(layout1, 500, 500);
+
+
+        Label taskLabel = new Label();
+        taskLabel.setText("here is ur current list:");
+        ScrollPane scrollPane = new ScrollPane();
+        VBox showList = new VBox();
+        Text title = new Text();
+        title.setText((GUICommands.printList(userList)).toString());
+        scrollPane.setContent(title);
+        showList.heightProperty().addListener((observable) -> scrollPane.setVvalue(1.0));
+        Button bye = new Button("bye");
+        bye.setOnAction(e -> stage.close());
+
+        showList.getChildren().addAll(taskLabel, scrollPane, bye);
+        inputScene = new Scene (showList,500,500);
+
+
+        stage.setScene(welcomeScene);
+        stage.show();
+    }
+
 }
 

@@ -85,8 +85,8 @@ public class inputData {
     static void clear() throws IOException {
         File oldFile = new File("/Users/wenhui/dukeyduke/data/duke.txt");
         File newFile = new File("/Users/wenhui/dukeyduke/data/tempduke.txt");
-        oldFile.delete();
         FileWriter fw = new FileWriter("/Users/wenhui/dukeyduke/data/tempduke.txt");
+        oldFile.delete();
         newFile.renameTo(new File("/Users/wenhui/dukeyduke/data/duke.txt"));
         System.out.println("task list cleared! :)");
     }

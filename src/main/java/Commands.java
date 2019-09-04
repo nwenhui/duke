@@ -90,6 +90,11 @@ public class Commands {
         }
     }
 
+    public void clear(ArrayList<Task> userList) throws IOException {
+        userList.clear();
+        storage.clear();
+    }
+
     //function to print out command list
     public void printCommands(){
         System.out.println("todo: enter a task that needs to completed\ntodo <description>\n");
@@ -105,7 +110,7 @@ public class Commands {
         if (type.equalsIgnoreCase("help")){
             printCommands();
         } else if (type.equalsIgnoreCase("clear")){
-            storage.clear();
+            clear(tasks.getList());
         } else if (type.equalsIgnoreCase("list")){
             System.out.println("Here are the tasks in your list:");
             tasks.print();

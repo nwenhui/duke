@@ -69,10 +69,10 @@ public class TaskList {
         try {
             DukeException.checkDeadlineInput(userInput);
             String[] tokens = userInput.split(Pattern.quote(" /by "));
-            Task newDeadline = new Deadline(tokens[0], tokens[1]);
-            userList.add(newDeadline);
             DukeException.checkDateFormat(tokens[1]);
             tokens[1] = convertDate(tokens[1]);
+            Task newDeadline = new Deadline(tokens[0], tokens[1]);
+            userList.add(newDeadline);
             System.out.println("Got it. I've added this task:\n\t[D][\u2718] " + tokens[0].trim() + " (by: " + tokens[1].trim() + ")");
             newData.addIncompleteDeadline(tokens[0].trim(), tokens[1].trim());
             System.out.println("Now you have " + userList.size() + " tasks in the list");
@@ -85,10 +85,10 @@ public class TaskList {
         try {
             DukeException.checkEventInput(userInput);
             String[] tokens = userInput.split(Pattern.quote(" /at "));
-            Task newEvent = new Event(tokens[0], tokens[1]);
-            userList.add(newEvent);
             DukeException.checkDateFormat(tokens[1]);
             tokens[1] = convertDate(tokens[1]);
+            Task newEvent = new Event(tokens[0], tokens[1]);
+            userList.add(newEvent);
             System.out.println("Got it. I've added this task:\n\t[E][\u2718] " + tokens[0].trim() + " (at: " + tokens[1].trim() + ")");
             newData.addIncompleteEvent(tokens[0].trim(), tokens[1].trim());
             System.out.println("Now you have " + userList.size() + " tasks in the list");

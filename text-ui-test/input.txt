@@ -1,0 +1,12 @@
+todo testing task
+deadline testing deadline /by 12/2/2019 2210
+event testing event /at 6/1/2024 0947
+list
+done 3
+todo delete this
+find testing
+done 2
+list
+delete 4
+list
+bye

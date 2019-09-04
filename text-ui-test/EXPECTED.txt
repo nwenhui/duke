@@ -35,7 +35,7 @@ Now you have 4 tasks in the list
 searching for...  testing
 Here are the matching tasks in your list:
 1. [T][✘] testing task
-1. [D][✘] testing deadline(by: 12th of February 2019, 10:10 PM)
+2. [D][✘] testing deadline(by: 12th of February 2019, 10:10 PM)
 3. [E][✓] testing event(at: 6th of January 2024, 09:47 AM)
 Nice! I've marked this task as done:
 	[D][✓]  testing deadline

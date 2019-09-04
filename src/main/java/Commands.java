@@ -81,7 +81,7 @@ public class Commands {
                 } else if (type.contains("E")) {
                     System.out.println(i + 1 + ". " + type + status + userList.get(i).description + "(at: " + userList.get(i).extra + ")");
                 } else if (type.contains("D")) {
-                    System.out.println(i + ". " + type + status + userList.get(i).description + "(by: " + userList.get(i).extra + ")");
+                    System.out.println(i + 1 + ". " + type + status + userList.get(i).description + "(by: " + userList.get(i).extra + ")");
                 }
             }
         }

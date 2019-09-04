@@ -1,22 +1,17 @@
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.regex.Pattern;
 
 public class Commands {
     private Storage storage;
     private Ui ui;
     private String type;
-    //private DukeException dukeException;
 
     //constructor: to get a storage instance to be used throughout for all commands
     public Commands(Storage storage, Ui ui, String type){
         this.storage = storage;
         this.ui = ui;
         this.type = type;
-        //this.dukeException = dukeException;
     }
 
     //function for complete task

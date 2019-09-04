@@ -1,7 +1,4 @@
 import java.io.IOException;
-import java.text.ParseException;
-import java.util.Scanner;
-import java.util.ArrayList;
 import java.io.File;
 
 public class Duke{

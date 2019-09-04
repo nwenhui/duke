@@ -1,8 +1,6 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ui {
-    //private Commands commands;
     private Scanner scan = new Scanner(System.in);
 
 

@@ -1,7 +1,6 @@
 import java.io.*;
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.Formatter;
 import java.util.regex.Pattern;
 
 public class Storage {
@@ -21,9 +20,7 @@ public class Storage {
 
     //creating scanner and formatter
     public void openFile() throws IOException {
-        //print = new Formatter(data);
         scan = new Scanner(data);
-        //output = new BufferedWriter((new FileWriter(data, true)));
     }
 
     public ArrayList<Task> load() throws IOException {
@@ -41,7 +38,6 @@ public class Storage {
 
     //create userList from existing data stored
     public void readFile(ArrayList<Task> userList) throws IOException {
-        //putting data into the list
         while (scan.hasNextLine()) {
             String userInput = scan.nextLine();
             String[] tokens = userInput.split(Pattern.quote(" | "));
@@ -145,7 +141,6 @@ public class Storage {
     }
 
     public void closeFile(){
-        //print.close();
         scan.close();
     }
 }

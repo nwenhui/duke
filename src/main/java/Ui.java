@@ -12,8 +12,6 @@ public class Ui {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
         System.out.println("Hello! I'm Duke \nWhat can I do for you?\nenter help for a list of commands available\n\n*-*-*-*-*-*-*-*-*-*-*-*-*\nHere is your current task list:");
-        //commands.printList(userList);
-        //System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*\n");
     }
 
     public String readCommand(){

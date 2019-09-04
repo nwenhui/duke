@@ -2,9 +2,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 public class DukeException extends Exception {
-    public DukeException(String s) {
+    private DukeException(String s) {
         super(s); //s is the error message
     }
 
@@ -12,9 +13,10 @@ public class DukeException extends Exception {
     public static void checkCommand(String command) throws DukeException {
         String[] commandList = {"todo", "deadline", "event", "done", "list", "help", "clear", "find", "delete"};
         boolean flag = false;
-        for (int i = 0; i < commandList.length; i++) {
-            if (command.equalsIgnoreCase(commandList[i])) {
+        for (String s : commandList) {
+            if (command.equalsIgnoreCase(s)) {
                 flag = true;
+                break;
             }
         }
         if (!flag) {
@@ -45,13 +47,33 @@ public class DukeException extends Exception {
     public static void checkEventInput(String input) throws DukeException {
         if (!input.contains(" /at ")){
             throw new DukeException("ohno u entered the event incorrectly :( pls try again in the format below:\n\tevent <description> /at <date> <time>");
+        } else if (input.split(Pattern.quote(" /at ")).length != 2){
+            throw new DukeException("ohno u entered the event incorrectly :( pls try again in the format below:\n\tevent <description> /at <date> <time>");
         }
     }
 
     //function to check whether input for deadline is done in the right format
     public static void checkDeadlineInput(String input) throws DukeException {
         if (!input.contains(" /by ")){
-            throw new DukeException("ohno u entered the deadline incorrectly :( pls try again in the format below:\n\tevent <description> /by <date> <time>");
+            throw new DukeException("ohno u entered the deadline incorrectly :( pls try again in the format below:\n\tdeadline <description> /by <date> <time>");
+        } else if (input.split(Pattern.quote(" /by ")).length != 2){
+            throw new DukeException("ohno u entered the deadline incorrectly :( pls try again in the format below:\n\tdeadline <description> /by <date> <time>");
+        }
+    }
+
+    //to check whether in the date is in the right format
+    public static void checkDateFormat(String input) throws DukeException{
+        boolean isValid;
+        SimpleDateFormat format = new SimpleDateFormat("d/MM/yyyy HHmm");
+        format.setLenient(false);
+        try {
+            format.parse(input);
+            isValid = true;
+        } catch (ParseException e){
+            isValid = false;
+        }
+        if (!isValid){
+            throw new DukeException("ohno u entered the date and time incorrectly :( pls try again in the format below:\n\t<d/mm/yyy> <24hr time>\n\teg:2/12/2019 1430");
         }
     }
 

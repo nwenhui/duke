@@ -1,5 +1,3 @@
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -8,17 +6,25 @@ import java.util.Date;
 import java.util.regex.Pattern;
 
 public class TaskList {
+    private ArrayList<Task> userList;
+
+    public TaskList(ArrayList<Task> inputList){
+        userList = inputList;
+    }
+
+    public ArrayList<Task> getList(){
+        return userList;
+    }
 
     //function to print list out -- prints error message when list is empty
-    public static void printList(ArrayList<Task> l) {
-        if (l.isEmpty()) {
+    public void print() {
+        if (userList.isEmpty()) {
             System.out.println("ur list is empty. pls input some tasks first");
         } else {
             int count = 0;
             String status;
             String type;
-            for (int i = 0; i < l.size(); i++) {
-                Task t = l.get(i);
+            for (Task t : userList) {
                 status = t.getStatusIcon();
                 type = t.getType();
                 if (type.contains("E")) {
@@ -32,97 +38,18 @@ public class TaskList {
         }
     }
 
-    //function for complete task
-    static void doneTask(String userInput, ArrayList<Task> userList){
-        String[] tokens = userInput.split(Pattern.quote(" "));
-        int taskNum = Integer.parseInt(tokens[1]) - 1;
-        try {
-            DukeException.checkTask(taskNum, userList);
-            Task doneTask = userList.get(taskNum);
-            doneTask.markAsDone();
-            String status = doneTask.getType();
-            inputData newCompleted = new inputData();
-            String type = "";
-            if (doneTask.getType().contains("T")) {
-                type = "todo";
-            } else if (doneTask.getType().contains("E")) {
-                type = "event";
-            } else {
-                type = "deadline";
-            }
-            newCompleted.completedTask(type, doneTask.description);
-            System.out.println("Nice! I've marked this task as done: \n\t" + status + "[\u2713] " + doneTask.description);
-        } catch (DukeException | IOException e) {
-            System.out.println("e r r o r   f o u n d\n" + e);
-        }
-    }
-
-    //function to delete task
-    static void deleteTask(String userInput, ArrayList<Task> userList) {
-        String[] tokens = userInput.split(Pattern.quote(" "));
-        int taskNum = Integer.parseInt(tokens[1]) - 1;
-        try {
-            DukeException.checkDelete(taskNum, userList);
-            inputData newDelete = new inputData();
-            Task deleteTask = userList.get(taskNum);
-            String type = deleteTask.getType();
-            String status = deleteTask.getStatusIcon();
-            System.out.println("Noted. I've removed this task:");
-            if (type.contains("T")) {
-                System.out.println("\t" + type + status + " " + deleteTask.description);
-            } else if (type.contains("E")) {
-                System.out.println("\t" + type + status + " " + deleteTask.description + " (at: " + deleteTask.extra + ")");
-            } else if (type.contains("D")) {
-                System.out.println("\t" + type + status + " " + deleteTask.description + " (by: " + deleteTask.extra + ")");
-            }
-            newDelete.deleteTask(type, deleteTask.description);
-            userList.remove(taskNum);
-        } catch (DukeException | IOException e) {
-            System.out.println("e r r o r   f o u n d\n" + e);
-        }
-    }
-
-    //function to find task using keyword
-    static void findTask(String userInput, ArrayList<Task> userList){
-        System.out.println("searching for... " + userInput);
-        boolean flag = true;
-        boolean first = true;
-        for (int i = 0; i < userList.size(); i++) {
-            if (userList.get(i).description.contains(userInput)) {
-                flag = false;
-                if (first) {
-                    System.out.println("Here are the matching tasks in your list:");
-                    first = false;
-                }
-                String type = userList.get(i).getType();
-                String status = userList.get(i).getStatusIcon();
-                if (type.contains("T")) {
-                    System.out.println(i + 1 + ". " + type + status + userList.get(i).description);
-                } else if (type.contains("E")) {
-                    System.out.println(i + 1 + ". " + type + status + userList.get(i).description + "(at: " + userList.get(i).extra + ")");
-                } else if (type.contains("D")) {
-                    System.out.println(i + ". " + type + status + userList.get(i).description + "(by: " + userList.get(i).extra + ")");
-                }
-            }
-        }
-        if (flag) {
-            System.out.println("there are no matching tasks in ur list :(");
-        }
-    }
-
     //function to convert input string into the specified date format
-    static String convertDate(String s) throws ParseException {
+    public String convertDate(String s) throws ParseException {
         String[] tokens = s.split(Pattern.quote("/"));
         SimpleDateFormat sourceFormat = new SimpleDateFormat("d/MM/yyyy HHmm");
         SimpleDateFormat targetFormatDate = new SimpleDateFormat("d");
-        SimpleDateFormat targetFormat = new SimpleDateFormat("' of' MMMM yyyy, hh:mm aa");
+        SimpleDateFormat targetFormat = new SimpleDateFormat("' of 'MMMM yyyy, hh:mm aa");
         Date sourceDate = sourceFormat.parse(s);
-        String converted = targetFormatDate.format(sourceDate) + getSuffix(Integer.parseInt(tokens[0])) + targetFormat.format(sourceDate);
-        return converted;
+        return (targetFormatDate.format(sourceDate) + getSuffix(Integer.parseInt(tokens[0])) + targetFormat.format(sourceDate));
     }
 
     //function to get the suffix for the date format
-    static String getSuffix(int n) {
+    private String getSuffix(int n) {
         if (n >= 11 && n <= 13) {
             return "th";
         }
@@ -138,14 +65,35 @@ public class TaskList {
         }
     }
 
-    //function to print out command list
-    static void printCommands(){
-        System.out.println("todo: enter a task that needs to completed\ntodo <description>\n");
-        System.out.println("event: enter a reminder for a upcoming event\nevent <description> /at <date> <time>\n");
-        System.out.println("deadline: enter a reminder for a upcoming deadline\n deadline <description> /by <date> <time>\n");
-        System.out.println("list: to list out all the tasks that have been saved\nlist\n");
-        System.out.println("completed: to check off a completed task\ndone <task number>\n");
-        System.out.println("clear: to clear off all task currently stored\nclear\n");
-        System.out.println("\tformat for date: d/mm/yyy     format for time: 24hr\n" );
+    public void addDeadline(String userInput, ArrayList<Task> userList, Storage newData){
+        try {
+            DukeException.checkDeadlineInput(userInput);
+            String[] tokens = userInput.split(Pattern.quote(" /by "));
+            Task newDeadline = new Deadline(tokens[0], tokens[1]);
+            userList.add(newDeadline);
+            DukeException.checkDateFormat(tokens[1]);
+            tokens[1] = convertDate(tokens[1]);
+            System.out.println("Got it. I've added this task:\n\t[D][\u2718] " + tokens[0].trim() + " (by: " + tokens[1].trim() + ")");
+            newData.addIncompleteDeadline(tokens[0].trim(), tokens[1].trim());
+            System.out.println("Now you have " + userList.size() + " tasks in the list");
+        } catch (DukeException | ParseException | IOException e) {
+            System.out.println("e r r o r   f o u n d\n" + e);
+        }
+    }
+
+    public void addEvent(String userInput, ArrayList<Task> userList, Storage newData){
+        try {
+            DukeException.checkEventInput(userInput);
+            String[] tokens = userInput.split(Pattern.quote(" /at "));
+            Task newEvent = new Event(tokens[0], tokens[1]);
+            userList.add(newEvent);
+            DukeException.checkDateFormat(tokens[1]);
+            tokens[1] = convertDate(tokens[1]);
+            System.out.println("Got it. I've added this task:\n\t[E][\u2718] " + tokens[0].trim() + " (at: " + tokens[1].trim() + ")");
+            newData.addIncompleteEvent(tokens[0].trim(), tokens[1].trim());
+            System.out.println("Now you have " + userList.size() + " tasks in the list");
+        } catch (DukeException | ParseException | IOException e) {
+            System.out.println("e r r o r   f o u n d\n" + e);
+        }
     }
 }

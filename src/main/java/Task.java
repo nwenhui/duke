@@ -9,11 +9,11 @@ public class Task {
         this.extra = "";
     }
 
-    public String getStatusIcon() {
+    String getStatusIcon() {
         return (isDone ? "[\u2713]" : "[\u2718]"); //return [tick] or [X] symbols
     }
 
-    public void markAsDone(){
+    void markAsDone(){
         this.isDone = true;
     }
 
@@ -21,7 +21,7 @@ public class Task {
         return ("task");
     }
 
-    public boolean checkStatus(){
+    boolean checkStatus(){
         return isDone;
     }
 }

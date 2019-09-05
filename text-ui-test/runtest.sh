@@ -7,9 +7,9 @@ mkdir ../bin
 fi
 
 # delete output from previous run
-if [ -e "./ACTUAL.TXT" ]
+if [ -e "./ACTUAL.txt" ]
 then
-rm ACTUAL.TXT
+rm ACTUAL.txt
 fi
 
 # compile the code into the bin folder, terminates if error occurred
@@ -20,7 +20,7 @@ exit 1
 fi
 
 # run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
-java -classpath ../src/main/java < input.txt > ACTUAL.TXT
+java -classpath ../src/main/java/Duke.java < input.txt > ACTUAL.txt
 
 # compare the output to the expected output
 diff ACTUAL.TXT EXPECTED.TXT

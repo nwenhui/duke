@@ -16,7 +16,10 @@ public class TaskList {
         return userList;
     }
 
-    //function to print list out -- prints error message when list is empty
+    /**
+     * print out current task list
+     * error message is printed out instead when task list is empty
+     */
     public void print() {
         if (userList.isEmpty()) {
             System.out.println("ur list is empty. pls input some tasks first");
@@ -38,7 +41,12 @@ public class TaskList {
         }
     }
 
-    //function to convert input string into the specified date format
+    /**
+     * convert input string into specified date format
+     * @param s the input string
+     * @return a string that has been converted in to the specified date/time format
+     * @throws ParseException
+     */
     public String convertDate(String s) throws ParseException {
         String[] tokens = s.split(Pattern.quote("/"));
         SimpleDateFormat sourceFormat = new SimpleDateFormat("d/MM/yyyy HHmm");
@@ -48,7 +56,11 @@ public class TaskList {
         return (targetFormatDate.format(sourceDate) + getSuffix(Integer.parseInt(tokens[0])) + targetFormat.format(sourceDate));
     }
 
-    //function to get the suffix for the date format
+    /**
+     * function to get the suffix for the date format
+     * @param n the date
+     * @return the suffix
+     */
     private String getSuffix(int n) {
         if (n >= 11 && n <= 13) {
             return "th";
@@ -65,6 +77,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * adds a deadline into our current task list as specified by the user
+     * @param userInput
+     * @param userList
+     * @param newData
+     */
     public void addDeadline(String userInput, ArrayList<Task> userList, Storage newData){
         try {
             DukeException.checkDeadlineInput(userInput);
@@ -81,6 +99,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * adds a new event into our current task list as specified by the user
+     * @param userInput
+     * @param userList
+     * @param newData
+     */
     public void addEvent(String userInput, ArrayList<Task> userList, Storage newData){
         try {
             DukeException.checkEventInput(userInput);

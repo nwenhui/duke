@@ -14,7 +14,11 @@ public class Commands {
         this.type = type;
     }
 
-    //function for complete task
+    /**
+     * sets a task status to "complete"
+     * @param userInput user input in the command line
+     * @param userList current task list
+     */
     public void doneTask(String userInput, ArrayList<Task> userList){
         String[] tokens = userInput.split(Pattern.quote(" "));
         int taskNum = Integer.parseInt(tokens[1]) - 1;
@@ -38,7 +42,11 @@ public class Commands {
         }
     }
 
-    //function to delete task
+    /**
+     * deletes a specific task
+     * @param userInput user input in the command line
+     * @param userList current task list
+     */
     public void deleteTask(String userInput, ArrayList<Task> userList) {
         String[] tokens = userInput.split(Pattern.quote(" "));
         int taskNum = Integer.parseInt(tokens[1]) - 1;
@@ -62,7 +70,11 @@ public class Commands {
         }
     }
 
-    //function to find task using keyword
+    /**
+     * finds task using keyword
+     * @param userInput keyword the user is searching for
+     * @param userList current task list
+     */
     public void findTask(String userInput, ArrayList<Task> userList){
         System.out.println("searching for... " + userInput);
         boolean flag = true;
@@ -90,12 +102,19 @@ public class Commands {
         }
     }
 
+    /**
+     * clears all current data everywhere (extra)
+     * @param userList current task list
+     * @throws IOException
+     */
     public void clear(ArrayList<Task> userList) throws IOException {
         userList.clear();
         storage.clear();
     }
 
-    //function to print out command list
+    /**
+     * prints out the list of commands (extra)
+     */
     public void printCommands(){
         System.out.println("todo: enter a task that needs to completed\ntodo <description>\n");
         System.out.println("event: enter a reminder for a upcoming event\nevent <description> /at <date> <time>\n");
@@ -106,6 +125,13 @@ public class Commands {
         System.out.println("\tformat for date: d/mm/yyy     format for time: 24hr\n" );
     }
 
+    /**
+     * executes the correct commands accordingly to user input
+     * @param tasks
+     * @param ui
+     * @param storage
+     * @throws IOException
+     */
     public void execute(TaskList tasks, Ui ui, Storage storage) throws IOException {
         if (type.equalsIgnoreCase("help")){
             printCommands();

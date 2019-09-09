@@ -7,6 +7,11 @@ public class Parser {
         this.ui = ui;
     }
 
+    /**
+     * creates a command according to user input
+     * @param userInput
+     * @return
+     */
     public Commands parse(String userInput){
         return new Commands(storage, ui, userInput);
     }

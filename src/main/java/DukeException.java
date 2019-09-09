@@ -8,7 +8,11 @@ public class DukeException extends Exception {
         super(s); //s is the error message
     }
 
-    //function to check whether input command is valid
+    /**
+     * checks if command is valid
+     * @param command command input by user
+     * @throws DukeException
+     */
     public static void checkCommand(String command) throws DukeException {
         String[] commandList = {"todo", "deadline", "event", "done", "list", "help", "clear", "find", "delete"};
         boolean flag = false;
@@ -23,14 +27,23 @@ public class DukeException extends Exception {
         }
     }
 
-    //function to check whether there is description added
+    /**
+     * checks if there is a description added for the todo
+     * @param input user input in command line
+     * @throws DukeException
+     */
     public static void checkDescription(String input) throws DukeException {
         if (input.isEmpty()) {
             throw new DukeException("ohno u did not enter a description :( pls try again");
         }
     }
 
-    //function to check whether task "done" is valid
+    /**
+     * checks if the task number that the user keyed in is valid
+     * @param a task number keyed in by user
+     * @param l task list
+     * @throws DukeException
+     */
     public static void checkTask(int a, ArrayList<Task> l) throws DukeException {
         if (a >= l.size() || a < 0) {
             throw new DukeException("ohno u entered an invalid task no. :( pls try again");
@@ -42,25 +55,52 @@ public class DukeException extends Exception {
         }
     }
 
-    //function to check whether input for event is done in the right format
+    /**
+     * checks if input for event is done in the right format
+     * "/at" must be included
+     * must include both description and date/time
+     * @param input user input in command line
+     * @throws DukeException
+     */
     public static void checkEventInput(String input) throws DukeException {
         if (!input.contains(" /at ")){
             throw new DukeException("ohno u entered the event incorrectly :( pls try again in the format below:\n\tevent <description> /at <date> <time>");
-        } else if (input.split(Pattern.quote(" /at ")).length != 2){
-            throw new DukeException("ohno u entered the event incorrectly :( pls try again in the format below:\n\tevent <description> /at <date> <time>");
+        } else{
+            String[] tokens = input.split(Pattern.quote(" /at "));
+            if (tokens.length != 2){
+                throw new DukeException("ohno u entered the event incorrectly :( pls try again in the format below:\n\tevent <description> /at <date> <time>");
+            } else if (tokens[0].isBlank()){
+                throw new DukeException("ohno u did not enter a description for this event :( pls try again in the format below:\n\tevent <description> /at <date> <time>");
+            }
         }
     }
 
-    //function to check whether input for deadline is done in the right format
+    /**
+     * checks if input for deadline is done in the right format
+     * "/by" must be included
+     * must include both description and date/time
+     * @param input user input in command line
+     * @throws DukeException
+     */
     public static void checkDeadlineInput(String input) throws DukeException {
         if (!input.contains(" /by ")){
             throw new DukeException("ohno u entered the deadline incorrectly :( pls try again in the format below:\n\tdeadline <description> /by <date> <time>");
-        } else if (input.split(Pattern.quote(" /by ")).length != 2){
-            throw new DukeException("ohno u entered the deadline incorrectly :( pls try again in the format below:\n\tdeadline <description> /by <date> <time>");
+        } else{
+            String[] tokens = input.split(Pattern.quote(" /by "));
+            if (tokens.length != 2){
+                throw new DukeException("ohno u entered the deadline incorrectly :( pls try again in the format below:\n\tdeadline <description> /by <date> <time>");
+            } else if (tokens[0].isBlank()){
+                throw new DukeException("ohno u did not enter a description for this deadline :( pls try again in the format below:\n\tdeadline <description> /by <date> <time>");
+            }
         }
     }
 
-    //to check whether in the date is in the right format
+    /**
+     * checks if input date is in right format
+     * right format: d/mm/yyyy 24hr time
+     * @param input input date
+     * @throws DukeException
+     */
     public static void checkDateFormat(String input) throws DukeException{
         boolean isValid;
         SimpleDateFormat format = new SimpleDateFormat("d/MM/yyyy HHmm");
@@ -76,6 +116,12 @@ public class DukeException extends Exception {
         }
     }
 
+    /**
+     * checks if the task number that the user keyed in is valid
+     * @param a task number keyed in by user
+     * @param l task list
+     * @throws DukeException
+     */
     //function to check whether task "done" is valid
     public static void checkDelete(int a, ArrayList<Task> l) throws DukeException {
         if (a >= l.size() || a < 0) {

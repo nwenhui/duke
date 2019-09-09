@@ -18,11 +18,16 @@ public class Storage {
         this.data = data;
     };
 
-    //creating scanner and formatter
+    //creating scanner
     public void openFile() throws IOException {
         scan = new Scanner(data);
     }
 
+    /**
+     * to load any previous data stored in the hard disk
+     * @return the task list with previous data
+     * @throws IOException
+     */
     public ArrayList<Task> load() throws IOException {
         ArrayList<Task> userList = new ArrayList<>(100);
         if (data.exists()) {
@@ -36,7 +41,11 @@ public class Storage {
         return userList;
     }
 
-    //create userList from existing data stored
+    /**
+     * to add previous data into an arraylist
+     * @param userList the arraylist to be edited with previous data
+     * @throws IOException
+     */
     public void readFile(ArrayList<Task> userList) throws IOException {
         while (scan.hasNextLine()) {
             String userInput = scan.nextLine();
@@ -61,24 +70,47 @@ public class Storage {
 
     //adding tasks from userInput//
 
+    /**
+     * adds a new todo as specified by the user
+     * @param s description of the task
+     * @throws IOException
+     */
     public void addIncompleteTodo(String s) throws IOException {
         output = new BufferedWriter((new FileWriter(data, true)));
         output.append("todo | incomplete | " + s + "\n");
         output.close();
     }
 
+    /**
+     * adds a new deadline as specified by the user
+     * @param s1 description of deadline
+     * @param s2 date and time of deadline
+     * @throws IOException
+     */
     public void addIncompleteDeadline(String s1, String s2) throws IOException {
         output = new BufferedWriter((new FileWriter("/Users/wenhui/dukeyduke/data/duke.txt", true)));
         output.append("deadline | incomplete | " + s1 + " | " + s2 + "\n");
         output.close();
     }
 
+    /**
+     * adds a new event as specified by the user
+     * @param s1 description of event
+     * @param s2 date and time of event
+     * @throws IOException
+     */
     public void addIncompleteEvent(String s1, String s2) throws IOException {
         output = new BufferedWriter((new FileWriter("/Users/wenhui/dukeyduke/data/duke.txt", true)));
         output.append("event | incomplete | " + s1 + " | " + s2 + "\n");
         output.close();
     }
 
+    /**
+     * edit data in hard disk to reflect the completion of a task
+     * @param type the type of task completed (todo/deadline/event)
+     * @param description description of task completed
+     * @throws IOException
+     */
     public void setCompletedTask(String type, String description) throws IOException {
         File oldFile = data;
         File newFile = new File("/Users/wenhui/dukeyduke/data/temp.txt");
@@ -108,6 +140,12 @@ public class Storage {
         newFile.renameTo(new File(data.getAbsolutePath()));
     }
 
+    /**
+     * deletes task from data stored in hard disk as specified by user
+     * @param type type of task to be deleted (todo/deadline/event)
+     * @param description description of task to be deleted
+     * @throws IOException
+     */
     public void deleteTask(String type, String description) throws IOException {
         File oldFile = data;
         File newFile = new File("/Users/wenhui/dukeyduke/data/temp.txt");
@@ -131,6 +169,10 @@ public class Storage {
         newFile.renameTo(new File(data.getAbsolutePath()));
     }
 
+    /**
+     * clears all data from hard disk (extra)
+     * @throws IOException
+     */
     public void clear() throws IOException {
         File oldFile = data;
         File newFile = new File("/Users/wenhui/dukeyduke/data/temp.txt");

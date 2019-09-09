@@ -2,7 +2,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Todo extends Task {
-    Todo(String description) {
+    public Todo(String description) {
         super(description); //this is to get description from parent class
     }
 
@@ -10,6 +10,12 @@ public class Todo extends Task {
         return ("[T]");
     }
 
+    /**
+     * adds a new Todo into our current task list
+     * @param userInput user input in the command line
+     * @param userList the current task list
+     * @param newData the class used for storing data in the hard disk
+     */
     static void addTodo(String userInput, ArrayList<Task> userList, Storage newData){
         try {
             DukeException.checkDescription(userInput);

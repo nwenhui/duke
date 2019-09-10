@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class Storage {
-
     //private Formatter print;
     private Scanner scan;
     private Writer output;

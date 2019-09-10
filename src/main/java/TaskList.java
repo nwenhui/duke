@@ -58,7 +58,7 @@ public class TaskList {
 
     /**
      * function to get the suffix for the date format
-     * @param n the date
+     * @param n the day
      * @return the suffix
      */
     private String getSuffix(int n) {

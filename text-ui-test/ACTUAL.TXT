@@ -1,0 +1,53 @@
+Hello from
+ ____        _        
+|  _ \ _   _| | _____ 
+| | | | | | | |/ / _ \
+| |_| | |_| |   <  __/
+|____/ \__,_|_|\_\___|
+
+Hello! I'm Duke 
+What can I do for you?
+enter help for a list of commands available
+
+*-*-*-*-*-*-*-*-*-*-*-*-*
+Here is your current task list:
+ur list is empty. pls input some tasks first
+*-*-*-*-*-*-*-*-*-*-*-*-*
+
+Got it. I've added this task:
+	[T][✘] testing task
+Now you have 1 tasks in the list
+Got it. I've added this task:
+	[D][✘] testing deadline (by: 12th of February 2019, 10:10 PM)
+Now you have 2 tasks in the list
+Got it. I've added this task:
+	[E][✘] testing event (at: 6th of January 2024, 09:47 AM)
+Now you have 3 tasks in the list
+Here are the tasks in your list:
+1.[T][✘]  testing task
+2.[D][✘]  testing deadline (by: 12th of February 2019, 10:10 PM)
+3.[E][✘]  testing event (at: 6th of January 2024, 09:47 AM)
+Nice! I've marked this task as done: 
+	[E][✓]  testing event
+Got it. I've added this task:
+	[T][✘] delete this
+Now you have 4 tasks in the list
+searching for...  testing
+Here are the matching tasks in your list:
+1. [T][✘] testing task
+2. [D][✘] testing deadline(by: 12th of February 2019, 10:10 PM)
+3. [E][✓] testing event(at: 6th of January 2024, 09:47 AM)
+Nice! I've marked this task as done: 
+	[D][✓]  testing deadline
+Here are the tasks in your list:
+1.[T][✘]  testing task
+2.[D][✓]  testing deadline (by: 12th of February 2019, 10:10 PM)
+3.[E][✓]  testing event (at: 6th of January 2024, 09:47 AM)
+4.[T][✘]  delete this
+Noted. I've removed this task:
+	[T][✘]  delete this
+Here are the tasks in your list:
+1.[T][✘]  testing task
+2.[D][✓]  testing deadline (by: 12th of February 2019, 10:10 PM)
+3.[E][✓]  testing event (at: 6th of January 2024, 09:47 AM)
+Bye. Hope to see you again soon!

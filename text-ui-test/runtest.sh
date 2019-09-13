@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # create bin directory if it doesn't exist
-if [ ! -d "../bin" ]
+if [ ! -d "/Users/wenhui/dukeyduke/bin" ]
 then
 mkdir ../bin
 fi
@@ -13,14 +13,14 @@ rm ACTUAL.txt
 fi
 
 # compile the code into the bin folder, terminates if error occurred
-if ! javac -cp ../src -Xlint:none -d /Users/wenhui/dukeyduke/bin ../src/main/java/*.java
+if ! javac -cp /Users/wenhui/dukeyduke/src -Xlint:none -d /Users/wenhui/dukeyduke/bin /Users/wenhui/dukeyduke/src/main/java/*.java
 then
 echo "********** BUILD FAILURE **********"
 exit 1
 fi
 
 # run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
-java -classpath ../src/main/java/Duke.java < input.txt > ACTUAL.txt
+java -classpath ../bin Duke < input.txt > ACTUAL.txt
 
 # compare the output to the expected output
 diff ACTUAL.TXT EXPECTED.TXT
@@ -32,3 +32,4 @@ else
 echo "Test result: FAILED"
 exit 1
 fi
+/Users/wenhui/dukeyduke/src
